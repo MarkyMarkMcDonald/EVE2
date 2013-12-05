@@ -5,9 +5,9 @@ var margin = {top: 40, right: 10, bottom: 10, left: 10},
 var color = d3.scale.category20c();
 
 var treemap = d3.layout.treemap()
-    .price([width, height])
+    .size([width, height])
     .sticky(true)
-    .value(function(d) { return d.price; });
+    .value(function(d) { return averageSystemPricePerUnit(d.buyOrders); });
 
 var div = d3.select("body").append("div")
     .style("position", "relative")
@@ -16,24 +16,41 @@ var div = d3.select("body").append("div")
     .style("left", margin.left + "px")
     .style("top", margin.top + "px");
 
+var averageSystemPricePerUnit = function(orderArray) {
+  if (!_.isEmpty(orderArray)) {
+    var totalPrice  = _.reduce(orderArray, function(memo, item) {
+      return (item.price * item.remaining) + memo;
+    }, 0);
+
+    var totalQuantity = _.reduce(orderArray, function(memo, item) {
+      return item.remaining + memo;
+    }, 0);
+
+    return totalPrice /  totalQuantity;
+  } else {
+    return 0;
+  }
+};
+
+
 d3.json("test.json", function(error, root) {
 console.log(root);
   var node = div.datum(root).selectAll(".node")
       .data(treemap.nodes)
-    .enter().append("div")
+      .enter().append("div")
       .attr("class", "node")
       .call(position)
       .style("background", function(d) { return d.children ? color(d.name) : null; })
       .text(function(d) { return d.children ? null : d.name; });
 
   d3.selectAll("input").on("change", function change() {
-    var value = this.value === "count"
-        ? function() { return 1; }
-        : function(d) { return d.price; };
+    var value = function(d) {
+      return averageSystemPricePerUnit(d.buyOrders);
+    };
 
     node
         .data(treemap.value(value).nodes)
-      .transition()
+        .transition()
         .duration(1500)
         .call(position);
   });
