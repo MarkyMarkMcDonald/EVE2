@@ -5,9 +5,9 @@ var margin = {top: 40, right: 10, bottom: 10, left: 10},
 var color = d3.scale.category20c();
 
 var treemap = d3.layout.treemap()
-    .size([width, height])
+    .price([width, height])
     .sticky(true)
-    .value(function(d) { return d.size; });
+    .value(function(d) { return d.price; });
 
 var div = d3.select("body").append("div")
     .style("position", "relative")
@@ -29,7 +29,7 @@ console.log(root);
   d3.selectAll("input").on("change", function change() {
     var value = this.value === "count"
         ? function() { return 1; }
-        : function(d) { return d.size; };
+        : function(d) { return d.price; };
 
     node
         .data(treemap.value(value).nodes)
