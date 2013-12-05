@@ -1,0 +1,38 @@
+#slider {
+  width: 750px;
+  margin: 0 auto;
+}
+
+
+/*
+  Max and Min
+*/
+
+.max {
+  float: left;
+}
+
+.min {
+  float: left;
+}
+
+.min, .max {
+  cursor: pointer;
+}
+
+/*
+  Range
+*/
+input[type="range"] {
+  float: left;
+  width: 500px;
+}
+
+/*
+  Current Value
+*/
+.current-value {
+  position: relative;
+  top: 40px;
+  left: 280px;
+}

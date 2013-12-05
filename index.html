@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" href="/css/treemap.css"/>
+  <link rel="stylesheet" href="/css/slider.css"/>
+  <link rel="stylesheet" href="/css/buyAndSellMode.css"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+
+</head>
+<body>
+
+  <div id="trading-mode">
+    <button class="buy">Buy</button>
+    <button class="sell">Sell</button>
+  </div>
+  <br>
+  <div id="tree-map-container">
+    <div id="tree-map"></div>
+  </div>
+
+  <div id="slider">
+    <div class="current-value">35000000</div>
+    <div contenteditable="true" class="min">30000000</div>
+    <input type="range" min="30000000" max="40000000">
+    <div contenteditable="true" class="max">40000000</div>
+  </div>
+
+  <!--libraries-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+  <!--our files-->
+  <script type="text/javascript" src="/js/color.js"></script>
+  <script type="text/javascript" src="/js/slider.js"></script>
+  <script type="text/javascript" src="/js/treeMap.js"></script>
+  <script type="text/javascript" src="/js/buySellMode.js"></script>
+
+</body>
+
