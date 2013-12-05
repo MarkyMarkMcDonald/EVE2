@@ -103,7 +103,7 @@ function createRegionData(root, bound) {
 }
 
 
-d3.json("lMissileL.json", function(error, root) {
+d3.json("drake.json", function(error, root) {
   console.log(root);
 
   root = createRegionData(root);
