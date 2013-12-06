@@ -85,24 +85,27 @@ var createRegionTreeMap = function(root) {
     })
     .call(position)
     .style("background", setNodeColor);
-  node.text(function(d)
-  {
-      if (currentMode == 'region')
-      {
-        return d.children ? null : d.name + '\n' + d.averageRegionSellPrice;
-      }
-      else
-      {
-          if (!d.children)
-          {
-              var sysAmount = 0;
-              for (var i = 0; i < d[orderType].length; i++) {
-                  sysAmount += d[orderType][i].remaining * d[orderType][i].price;
-              }
-          }
-          return d.name + '\n' + sysAmount;
-      }
-  });
+    node.attr("data-averageSellPrice", function(d)
+    {
+        if (currentMode == 'region')
+        {
+            return d.children ? null : d.averageRegionSellPrice;
+        }
+        else
+        {
+            if (!d.children)
+            {
+                var sysAmount = 0;
+                for (var i = 0; i < d[orderType].length; i++) {
+                    sysAmount += d[orderType][i].remaining * d[orderType][i].price;
+                }
+            }
+            return sysAmount;
+        }
+    });
+
+    node.attr("onmouseover", "displayToolTip(this)");
+
 
   function position() {
     this.style("left", function(d) { return d.x + "px"; })

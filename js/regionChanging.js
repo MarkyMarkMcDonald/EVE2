@@ -14,5 +14,12 @@ $(function(){
       updateInfoviz();
   });
 
+
+
 });
 
+function displayToolTip(node)
+{
+    
+    console.log(node.getAttribute("name"));
+}
