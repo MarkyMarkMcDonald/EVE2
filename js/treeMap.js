@@ -110,14 +110,14 @@ var createRegionTreeMap = function(root) {
 var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
   if (!_.isEmpty(orderArray)) {
     orderArray = _.sortBy(orderArray, function(order) {
-      if (orderType = 'sellOrders') {
+      if (orderType == 'sellOrders') {
         return order.price;
       } else {
         return -1 * order.price;
       }
     });
 
-    if (orderType = 'sellOrders') {
+    if (orderType == 'sellOrders') {
       // Buy Mode (return quantity)
       var currentPrice = 0;
       var currentQuantity = 0;
@@ -140,8 +140,25 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
 
       return currentQuantity;
     } else {
-      // Sell Mode (return price)
-      return 0;
+        // each loop that breaks on false return
+        var currentPrice = 0;
+        var currentQuantity = 0;
+        _.every(orderArray, function(order) {
+            var price = parseFloat(order.price);
+            var quantity = parseInt(order.remaining);
+            if (bound - (quantity) > 0) {
+                currentPrice += price * quantity;
+                currentQuantity += quantity;
+                return true;
+            } else {
+                currentPrice += price * (bound - currentQuantity);
+                currentQuantity = bound;
+                return false;
+            }
+        });
+        console.log(currentPrice);
+        return currentPrice;
+
     }
   } else {
     return 0;
@@ -201,7 +218,29 @@ function createScatterPlot(system) {
   console.log(system.sellOrders);
   console.log(system.buyOrders);
 
-  system.sellOrders[0].time.split(' ')[1].split(':');
+  var timeArray = new Array();
+  var priceArray = new Array();
+  var dateArray = new Array();
+
+//Puts data into 3 separate arrays
+  for(var i =0; i<system.sellOrders.length; i++){
+    timeArray[i]= system.sellOrders[i].time.split(' ')[1];
+    dateArray[i]= system.sellOrders[i].time.split(' ')[0];
+    priceArray[i]= system.sellOrders[i].price;
+  }
+
+ //dimensions of line graph
+ var margins = [80, 80, 80, 80]
+ var width = 1000 - m[1]-m[3];
+ var height = 400 - m[0]-m[2];
+
+ //x and y scales
+ var xScale = d3.scale.linear().domain([0, timeArray.length]).range([0,width]); 
+ var yScale = d3.scale.linear().domain([0,10]).range([h,0]);
+
+ //var line = d3.svg.line();
+
+
 
 }
 
