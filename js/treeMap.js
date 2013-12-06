@@ -146,8 +146,6 @@ function createRegionData(root, bound) {
     return root;
 }
 
-
-
 /*
  Should update infoviz based on given value
  */
@@ -172,7 +170,18 @@ function updateInfoviz() {
         }
         createRegionTreeMap(hold);
     }
+
+    createScatterPlot(root.children[0].children[0]);
+
   });
+}
+
+function createScatterPlot(system) {
+  console.log(system.sellOrders);
+  console.log(system.buyOrders);
+
+  system.sellOrders[0].time.split(' ')[1].split(':');
+
 }
 
 updateInfoviz();
