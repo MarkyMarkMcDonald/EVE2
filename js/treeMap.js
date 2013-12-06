@@ -158,17 +158,11 @@ function updateInfoviz() {
     } else {
       // create root that's a system instead of region
 
-        var hold;
-        var i = 0;
-        while(!hold && i < root.children.length)
-        {
-            if(root.children[i].name == currentRegion)
-            {
-                hold = root.children[i];
-            }
-            i++;
-        }
-        createRegionTreeMap(hold);
+        var system = _.find(root.children, function(system) {
+          return system.name == currentRegion;
+        });
+
+        createRegionTreeMap(system);
     }
 
     createScatterPlot(root.children[0].children[0]);
