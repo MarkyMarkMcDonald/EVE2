@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="/css/treemap.css"/>
   <link rel="stylesheet" href="/css/slider.css"/>
   <link rel="stylesheet" href="/css/buyAndSellMode.css"/>
@@ -19,8 +20,10 @@
         <div style="clear: both;">&nbsp;</div>
     </div>
   <div id="trading-mode">
-    <button class="buy" name="buyOrders">Buy Orders</button>
-    <button class="sell" name="sellOrders">Sell Orders</button>
+    <div class="btn-group">
+      <button class="buy btn" name="buyOrders">Buy Orders</button>
+      <button class="sell btn active" name="sellOrders">Sell Orders</button>
+    </div>
   </div>
   <select id="myList" onchange="changeGood()">
       <option>Tritanium</option>
@@ -39,7 +42,7 @@
     <input type="range" min="30000000" max="40000000">
     <div contenteditable="true" class="max">40000000</div>
   </div>
-  
+
   <div id="color-key">
     <div class="key-value"></div>
     <div class="key-value"></div>
@@ -58,9 +61,9 @@
   </div>
 </div>
   <!--libraries-->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script src="/js/lib/jquery.js"></script>
+  <script src="/js/lib/d3.js"></script>
+  <script src="/js/lib/underscore.js"></script>
 
   <!--our files-->
   <script type="text/javascript" src="/js/color.js"></script>
