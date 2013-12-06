@@ -1,8 +1,8 @@
 var orderType = 'sellOrders';
 var currentAmount = 35000000;
-var currentMode = 'region';
-var currentGoodType = 'lMissileL';
-
+var currentMode = 'system';
+var currentGoodType = 'tritainium';
+var currentRegion = "Geminate";
 var systemValueFinder = function(d) {
   return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
 };
@@ -50,7 +50,21 @@ var createRegionTreeMap = function(root) {
     })
     .call(position)
     .style("background", function(d) {
-      return d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
+          var color;
+          if(currentMode == 'region')
+          {
+              color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
+          }
+          if(!d.children)
+          {
+              var sysAmount = 0;
+              for(var i = 0; i < d[orderType].length; i++)
+              {
+                  sysAmount += d[orderType][i].remaining * d[orderType][i].price;
+              }
+              color = getColorForPercentage(sysAmount / currentAmount);
+          }
+      return color;
     });
 
   node.text(function(d) {
@@ -122,15 +136,17 @@ var averageRegionPricePerUnit = function(systems, orderType, bound) {
 };
 
 function createRegionData(root, bound) {
-  _.each(root.children, function(region) {
-    region.averageRegionBuyPrice = averageRegionPricePerUnit(region.children, 'buyOrders', bound);
-    region.averageRegionSellPrice = averageRegionPricePerUnit(region.children, 'sellOrders', bound);
-    region.numberOfChildren = region.children.length;
-    delete region.children;
-  });
+    _.each(root.children, function(region) {
+        region.averageRegionBuyPrice = averageRegionPricePerUnit(region.children, 'buyOrders', bound);
+        region.averageRegionSellPrice = averageRegionPricePerUnit(region.children, 'sellOrders', bound);
+        region.numberOfChildren = region.children.length;
+        delete region.children;
+    });
 
-  return root;
+    return root;
 }
+
+
 
 /*
  Should update infoviz based on given value
@@ -143,7 +159,18 @@ function updateInfoviz() {
       createRegionTreeMap(root);
     } else {
       // create root that's a system instead of region
-      createRegionTreeMap(root);
+
+        var hold;
+        var i = 0;
+        while(!hold && i < root.children.length)
+        {
+            if(root.children[i].name == currentRegion)
+            {
+                hold = root.children[i];
+            }
+            i++;
+        }
+        createRegionTreeMap(hold);
     }
   });
 }
