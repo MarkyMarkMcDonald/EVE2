@@ -1,14 +1,18 @@
-var rootFromServer;
 var orderType = 'sellOrders';
-var currentAmount = 135000000;
+var currentAmount = 35000000;
 var currentMode = 'region';
+var currentGoodType = 'tritainium';
 
 var systemValueFinder = function(d) {
   return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
 };
 
 var regionValueFinder = function(d) {
-  return d.averageRegionSellPrice
+  if (orderType == 'sellOrders') {
+    return d.averageRegionSellPrice;
+  } else {
+    return d.averageRegionBuyPrice;
+  }
 };
 
 var createRegionTreeMap = function(root) {
@@ -21,7 +25,13 @@ var createRegionTreeMap = function(root) {
   var treemap = d3.layout.treemap()
     .size([width, height])
     .sticky(true)
-    .value(regionValueFinder);
+    .value(function(){
+      if (currentMode == 'region') {
+        return regionValueFinder;
+      } else {
+        return systemValueFinder;
+      }
+    });
 
 
   var div = d3.select("#tree-map").append("div")
@@ -66,6 +76,7 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
     });
 
     if (orderType = 'sellOrders') {
+      // Buy Mode (return quantity)
       var currentPrice = 0;
       var currentQuantity = 0;
       // each loop that breaks on false return
@@ -87,7 +98,8 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
 
       return currentQuantity;
     } else {
-
+      // Sell Mode (return price)
+      return 1;
     }
   } else {
     return 0;
@@ -124,14 +136,14 @@ function createRegionData(root, bound) {
  Should update infoviz based on given value
  */
 function updateInfoviz() {
-  d3.json("tritainium.json", function(error, root) {
-    root =  createRegionData(root, currentAmount);
-
+  d3.json(currentGoodType + ".json", function(error, root) {
     $('#tree-map').empty();
     if (currentMode == 'region') {
+      root =  createRegionData(root, currentAmount);
       createRegionTreeMap(root);
     } else {
-
+      // create root that's a system instead of region
+      createRegionTreeMap(root);
     }
   });
 }
