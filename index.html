@@ -12,36 +12,42 @@
 </head>
 <body>
 <div class="wrapper">
-    <div style="background: #000;">
-
-        <br />
-        <h1 style="color:#FFFFFF; padding: 0em;">Eve </h1>
-        <br />
-        <div style="clear: both;">&nbsp;</div>
-    </div>
-  <div id="trading-mode">
-    <div class="btn-group">
-      <button class="buy btn" name="buyOrders">Buy Orders</button>
-      <button class="sell btn active" name="sellOrders">Sell Orders</button>
-    </div>
+  <div style="background: #000;">
+      <br />
+      <h1 style="color:#FFFFFF; padding: 0em;">Eve </h1>
+      <br />
+      <div style="clear: both;">&nbsp;</div>
   </div>
-  <select id="myList" onchange="changeGood()">
-      <option>Tritanium</option>
-      <option>Light Missile Launcher</option>
-      <option>Drake</option>
-  </select>
+  <div class="options">
+    <div id="trading-mode">
+      <div class="btn-group">
+        <button class="buy btn" name="buyOrders">Buy Orders</button>
+        <button class="sell btn active" name="sellOrders">Sell Orders</button>
+      </div>
+    </div>
+
+    <div id="slider">
+      <div class="current-value">35000000</div>
+      <div contenteditable="true" class="min">30000000</div>
+      <input type="range" min="30000000" max="40000000">
+      <div contenteditable="true" class="max">40000000</div>
+    </div>
+
+    <select id="myList" onchange="changeGood()">
+        <option>Tritanium</option>
+        <option>Light Missile Launcher</option>
+        <option>Drake</option>
+    </select>
+  </div>
   <div id="modeChange"></div>
+
   <br>
+
   <div id="tree-map-container">
     <div id="tree-map"></div>
   </div>
 
-  <div id="slider">
-    <div class="current-value">35000000</div>
-    <div contenteditable="true" class="min">30000000</div>
-    <input type="range" min="30000000" max="40000000">
-    <div contenteditable="true" class="max">40000000</div>
-  </div>
+
 
   <div id="color-key">
     <div class="key-value"></div>
