@@ -1,6 +1,6 @@
 var orderType = 'sellOrders';
 var currentAmount = 35000000;
-var currentMode = 'system';
+var currentMode = 'region';
 var currentGoodType = 'tritainium';
 var currentRegion = "Geminate";
 var systemValueFinder = function(d) {
@@ -32,7 +32,6 @@ var createRegionTreeMap = function(root) {
         return systemValueFinder(d);
       }
     });
-
 
   var div = d3.select("#tree-map").append("div")
     .style("position", "relative")
@@ -66,7 +65,15 @@ var createRegionTreeMap = function(root) {
     var node = div.datum(root).selectAll(".node")
     .data(treemap.nodes)
     .enter().append("div")
-    .attr("class", "node")
+    .attr("class", function(d){
+      if (!d.children && currentMode == 'region') {
+        return "node region"
+      } else if (!d.children && currentMode == 'system') {
+        return "node system"
+      } else {
+        return "node";
+      }
+    })
     .attr("name", function(d) {
       return d.name;
     })
@@ -184,9 +191,8 @@ function updateInfoviz() {
         });
 
         createRegionTreeMap(system);
+        createScatterPlot(root.children[0].children[0]);
     }
-
-    createScatterPlot(root.children[0].children[0]);
 
   });
 }
