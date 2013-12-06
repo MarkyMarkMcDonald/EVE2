@@ -262,9 +262,9 @@ function createScatterPlot(system) {
     .attr("cx",function(d,i) {
         return x(i);
     })
-    .attr("cy", function(d)[
+    .attr("cy", function(d){
         return y(d);
-    ])
+      })
     .attr("r", 5)
 
 
