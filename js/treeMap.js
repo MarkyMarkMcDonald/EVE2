@@ -1,7 +1,7 @@
 var orderType = 'sellOrders';
 var currentAmount = 35000000;
 var currentMode = 'region';
-var currentGoodType = 'tritainium';
+var currentGoodType = 'lMissileL';
 
 var systemValueFinder = function(d) {
   return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
@@ -25,11 +25,11 @@ var createRegionTreeMap = function(root) {
   var treemap = d3.layout.treemap()
     .size([width, height])
     .sticky(true)
-    .value(function(){
+    .value(function(d){
       if (currentMode == 'region') {
-        return regionValueFinder;
+        return regionValueFinder(d);
       } else {
-        return systemValueFinder;
+        return systemValueFinder(d);
       }
     });
 
@@ -99,7 +99,7 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
       return currentQuantity;
     } else {
       // Sell Mode (return price)
-      return 1;
+      return 0;
     }
   } else {
     return 0;
