@@ -208,15 +208,13 @@ function updateInfoviz() {
         });
 
         createRegionTreeMap(system);
-        createScatterPlot(root.children[0].children[0]);
+        createScatterPlot(root.children[0].children[1]);
     }
 
   });
 }
 
 function createScatterPlot(system) {
-  console.log(system.sellOrders);
-  console.log(system.buyOrders);
 
   var timeArray = new Array();
   var priceArray = new Array();
@@ -226,45 +224,78 @@ function createScatterPlot(system) {
   for(var i =0; i<system.sellOrders.length; i++){
     timeArray[i]= system.sellOrders[i].time.split(' ')[1];
     dateArray[i]= system.sellOrders[i].time.split(' ')[0];
-    priceArray[i]= system.sellOrders[i].price;
+    priceArray[i]= parseFloat(system.sellOrders[i].price);
   }
 
- //dimensions of line graph
- var margins = [80, 80, 80, 80]
- var width = 1000 - m[1]-m[3];
- var height = 400 - m[0]-m[2];
 
- //x and y scales
- var xScale = d3.scale.linear().domain([0, timeArray.length]).range([0,width]); 
- var yScale = d3.scale.linear().domain([0,10]).range([h,0]);
+  var w = 1000,
+  h = 300,
+  margin = 20,
+  y = d3.scale.linear().domain([d3.min(priceArray), d3.max(priceArray)]).range([d3.min(priceArray) + margin, h - margin]),
+  x = d3.scale.linear().domain([0, priceArray.length]).range([0 + margin, w - margin]);
 
- var line = d3.svg.line()
-      .x(function(d,i){
-        return x(i);
-      })
-      .y(function(d){
-        return y(d);
-      })
+  var vis = d3.select("#scatter-plot")
+    .append("svg:svg")
+    .attr("width", w)
+    .attr("height", h);
+ 
+  var g = vis.append("svg:g")
+    .attr("transform", "translate(0, 200)");
 
-      var graph = d3.select("#lineGraph").append("svg:svg")
-        .attr("width", width + margins[1] + margins[3])
-        .attr("height", height + margins[0] + margins[2])
-        .append("svg:g")
-        .attr("transform", "translate(" + m[3] + "," + m[0] + ")")
+  var line = d3.svg.line()
+    .x(function(d,i) { return x(i); })
+    .y(function(d) { return  -y(d); });
 
-      var xAxis = d3.svg.axis().scale(xScale).tickSize(-height).tickSubdivide(true);
-        graph.append("svg:g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+  g.append("svg:path").attr("d", line(priceArray));
 
-      var yAxis = d3.svg.axis().scale(yScale).ticks(4).orient("left");
-      graph.append("svg:g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(-25,0)")
-            .call(yAxis);
+  g.append("svg:line")
+    .attr("x1", x(0))
+    .attr("y1", -1 * y(0))
+    .attr("x2", x(w))
+    .attr("y2", -1 * y(0));
+ 
+  g.append("svg:line")
+    .attr("x1", x(0))
+    .attr("y1", -1 * y(0))
+    .attr("x2", x(0))
+    .attr("y2", -1 * y(d3.max(priceArray)));
 
-      graph.append("svg:path").attr("d", line(priceArray));
+  g.selectAll(".xLabel")
+    .data(x.ticks(5))
+    .enter().append("svg:text")
+    .attr("class", "xLabel")
+    .text(String)
+    .attr("x", function(d) { return x(d) })
+    .attr("y", 0)
+    .attr("text-anchor", "middle");
+ 
+  g.selectAll(".yLabel")
+    .data(y.ticks(4))
+    .enter().append("svg:text")
+    .attr("class", "yLabel")
+    .text(String)
+    .attr("x", 0)
+    .attr("y", function(d) { return -1 * y(d) })
+    .attr("text-anchor", "right")
+    .attr("dy", 4);
+
+  g.selectAll(".xTicks")
+    .data(x.ticks(5))
+    .enter().append("svg:line")
+    .attr("class", "xTicks")
+    .attr("x1", function(d) { return x(d); })
+    .attr("y1", -1 * y(0))
+    .attr("x2", function(d) { return x(d); })
+    .attr("y2", -1 * y(-0.3));
+ 
+  g.selectAll(".yTicks")
+    .data(y.ticks(4))
+    .enter().append("svg:line")
+    .attr("class", "yTicks")
+    .attr("y1", function(d) { return -1 * y(d); })
+    .attr("x1", x(-0.3))
+    .attr("y2", function(d) { return -1 * y(d); })
+    .attr("x2", x(0));
 
 }
 
