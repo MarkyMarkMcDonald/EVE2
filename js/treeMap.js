@@ -3,6 +3,7 @@ var currentAmount = 35000000;
 var currentMode = 'region';
 var currentGoodType = 'tritainium';
 var currentRegion = "Geminate";
+var paletteNum = 0;
 var systemValueFinder = function(d) {
   return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
 };
@@ -43,7 +44,7 @@ var createRegionTreeMap = function(root) {
     function setNodeColor(d) {
         var color;
         if (currentMode == 'region') {
-            color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
+            color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100, paletteNum);
         }
         else
         {
@@ -56,7 +57,7 @@ var createRegionTreeMap = function(root) {
                 pct = pct > 1 ? 1 : pct;
                 pct = 1 - pct;
                 console.log(pct);
-                color = getColorForPercentage(pct);
+                color = getColorForPercentage(pct, paletteNum);
             }
         }
         return color;
@@ -79,7 +80,6 @@ var createRegionTreeMap = function(root) {
     })
     .call(position)
     .style("background", setNodeColor);
-
   node.text(function(d)
   {
       if (currentMode == 'region')

@@ -4,19 +4,34 @@ var percentColors = [
   { pct: 1.0, color: { r: 0xff, g: 0x00, b: 0 } }
 ];
 
+var greenColors = [
+  { pct: 0.0, color: {} },
+  { pct: 0.0, color: {} }
+];
+
+function getColorKeys(paletteNum){
+  var colorKey = [];
+  for (var i = 1; i <= 10; i++) {
+    colorKey.push(getColorForPercentage(i / 10, paletteNum));
+  }
+  return colorKey;
+}
+
 /**
  * Returns a (css styling) color from two gradients based on a percent - one gradient between low + mid and one between mid + high
  * Taken from: http://stackoverflow.com/questions/7128675/from-green-to-red-color-depend-on-percentage
  */
-var getColorForPercentage = function(pct) {
-    if(pct == 0)
+var getColorForPercentage = function(pct, paletteNum) {
+  var colorArray = paletteNum == 0 ? percentColors : greenColors;
+
+  if(pct == 0)
     {
         pct = 0.0001;
     }
-  for (var i = 0; i < percentColors.length; i++) {
-    if (pct <= percentColors[i].pct) {
-      var lower = percentColors[i - 1];
-      var upper = percentColors[i];
+  for (var i = 0; i < colorArray.length; i++) {
+    if (pct <= colorArray[i].pct) {
+      var lower = colorArray[i - 1];
+      var upper = colorArray[i];
       var range = upper.pct - lower.pct;
       var rangePct = (pct - lower.pct) / range;
       var pctLower = 1 - rangePct;

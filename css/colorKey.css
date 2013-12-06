@@ -1,0 +1,9 @@
+#color-key {
+  margin-top: 50px;
+}
+
+.key-value {
+  height: 10px;
+  width: 95px;
+  float: left;
+}
