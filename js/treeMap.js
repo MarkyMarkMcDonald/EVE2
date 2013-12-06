@@ -150,7 +150,7 @@ function createRegionData(root, bound) {
  Should update infoviz based on given value
  */
 function updateInfoviz() {
-  d3.json(currentGoodType + ".json", function(error, root) {
+  d3.json("data/" + currentGoodType + ".json", function(error, root) {
     $('#tree-map').empty();
     if (currentMode == 'region') {
       root =  createRegionData(root, currentAmount);
