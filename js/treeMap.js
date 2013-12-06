@@ -225,49 +225,11 @@ function updateInfoviz() {
 
         createRegionTreeMap(system);
         drawColorKeys();
-        createScatterPlot(root.children[0].children[1]);
+        
     }
 
   });
 }
 
-function createScatterPlot(system) {
-
-  var timeArray = new Array();
-  var priceArray = new Array();
-  var dateArray = new Array();
-
-//Puts data into 3 separate arrays
-  for(var i =0; i<system.sellOrders.length; i++){
-    timeArray[i]= system.sellOrders[i].time.split(' ')[1];
-    dateArray[i]= system.sellOrders[i].time.split(' ')[0];
-    priceArray[i]= parseFloat(system.sellOrders[i].price);
-  }
-
-
-  var w = 500;
-  var h = 100;
-  var margin = 20;
-  var y = d3.scale.linear().domain([0, d3.max(data)]).range([0 + margin, h - margin]);
-  var x = d3.scale.linear().domain([0, data.length]).range([0 + margin, w - margin]);
-
-
-
-  var svg = d3.select("#scatter-plot")
-              .append("svg")
-              .attr("width", w)
-              .attr("height", h);
-
-  svg.selectall("circle").data(priceArray).enter().append("circle")
-    .attr("cx",function(d,i) {
-        return x(i);
-    })
-    .attr("cy", function(d){
-        return y(d);
-      })
-    .attr("r", 5)
-
-
-}
 
 updateInfoviz();
