@@ -269,7 +269,7 @@ function createScatterPlot(system){
       .attr("width", w)
       .attr("height", h);
    var x = d3.scale.linear().domain([0, 23]).range([left_pad, w-pad]),
-       y = d3.scale.linear().domain([0, 6]).range([pad, h-pad*2]);
+       y = d3.scale.linear().domain([0, 6]).range([h-pad*2, pad]);
    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
        yAxis = d3.svg.axis().scale(y).orient("left");     
        
