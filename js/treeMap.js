@@ -1,9 +1,12 @@
 var orderType = 'sellOrders';
 var currentAmount = 35000000;
 var currentMode = 'region';
-var currentGoodType = 'tritainium';
+var currentGoodType = 'Tritanium';
 var currentRegion = "Geminate";
 var paletteNum = 0;
+
+var mostChildren = 1;
+
 var systemValueFinder = function(d) {
   return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
 };
@@ -44,7 +47,8 @@ var createRegionTreeMap = function(root) {
     function setNodeColor(d) {
         var color;
         if (currentMode == 'region') {
-            color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100, paletteNum);
+            paletteNum = 1;
+            color = d.children ? null : getColorForPercentage(d.numberOfChildren / mostChildren, paletteNum);
         }
         else
         {
@@ -57,6 +61,7 @@ var createRegionTreeMap = function(root) {
                 pct = pct > 1 ? 1 : pct;
                 pct = 1 - pct;
                 console.log(pct);
+                paletteNum = 0;
                 color = getColorForPercentage(pct, paletteNum);
             }
         }
@@ -181,14 +186,23 @@ var averageRegionPricePerUnit = function(systems, orderType, bound) {
 };
 
 function createRegionData(root, bound) {
+    mostChildren = 1;
     _.each(root.children, function(region) {
         region.averageRegionBuyPrice = averageRegionPricePerUnit(region.children, 'buyOrders', bound);
         region.averageRegionSellPrice = averageRegionPricePerUnit(region.children, 'sellOrders', bound);
         region.numberOfChildren = region.children.length;
+        mostChildren = region.children.length > mostChildren ? region.children.length : mostChildren;
         delete region.children;
     });
 
     return root;
+}
+
+function changeGood()
+{
+    var mylist=document.getElementById("myList");
+    currentGoodType = mylist.options[mylist.selectedIndex].text;
+    updateInfoviz();
 }
 
 /*
@@ -199,7 +213,9 @@ function updateInfoviz() {
     $('#tree-map').empty();
     if (currentMode == 'region') {
       root =  createRegionData(root, currentAmount);
+
       createRegionTreeMap(root);
+        drawColorKeys();
     } else {
       // create root that's a system instead of region
 
@@ -208,6 +224,7 @@ function updateInfoviz() {
         });
 
         createRegionTreeMap(system);
+        drawColorKeys();
         createScatterPlot(root.children[0].children[1]);
     }
 

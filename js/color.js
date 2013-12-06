@@ -5,8 +5,9 @@ var percentColors = [
 ];
 
 var greenColors = [
-  { pct: 0.0, color: {} },
-  { pct: 0.0, color: {} }
+  { pct: 0.0, color: {r:0x00, g:0x32, b:0x00} },
+  { pct: 0.5, color: {r:0x00, g:0x8A, b:0x00} },
+  { pct: 1.0, color: {r:0x00, g:0xE1, b:0x00} }
 ];
 
 function getColorKeys(paletteNum){
