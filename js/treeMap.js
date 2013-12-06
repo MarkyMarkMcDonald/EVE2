@@ -110,14 +110,14 @@ var createRegionTreeMap = function(root) {
 var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
   if (!_.isEmpty(orderArray)) {
     orderArray = _.sortBy(orderArray, function(order) {
-      if (orderType = 'sellOrders') {
+      if (orderType == 'sellOrders') {
         return order.price;
       } else {
         return -1 * order.price;
       }
     });
 
-    if (orderType = 'sellOrders') {
+    if (orderType == 'sellOrders') {
       // Buy Mode (return quantity)
       var currentPrice = 0;
       var currentQuantity = 0;
@@ -140,8 +140,25 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
 
       return currentQuantity;
     } else {
-      // Sell Mode (return price)
-      return 0;
+        // each loop that breaks on false return
+        var currentPrice = 0;
+        var currentQuantity = 0;
+        _.every(orderArray, function(order) {
+            var price = parseFloat(order.price);
+            var quantity = parseInt(order.remaining);
+            if (bound - (quantity) > 0) {
+                currentPrice += price * quantity;
+                currentQuantity += quantity;
+                return true;
+            } else {
+                currentPrice += price * (bound - currentQuantity);
+                currentQuantity = bound;
+                return false;
+            }
+        });
+        console.log(currentPrice);
+        return currentPrice;
+
     }
   } else {
     return 0;
