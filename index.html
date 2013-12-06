@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/lib/bootstrap.min.css"/>
   <link rel="stylesheet" href="/css/treemap.css"/>
   <link rel="stylesheet" href="/css/slider.css"/>
   <link rel="stylesheet" href="/css/buyAndSellMode.css"/>
@@ -11,22 +11,37 @@
 
 </head>
 <body>
-
-  <div id="trading-mode">
-    <div class="btn-group">
-      <button class="buy btn" name="buyOrders">Buy Orders</button>
-      <button class="sell btn active" name="sellOrders">Sell Orders</button>
+  <div id="options">
+    <div id="trading-mode">
+      <div class="btn-group">
+        <button class="buy btn" name="buyOrders">Buy Orders</button>
+        <button class="sell btn active" name="sellOrders">Sell Orders</button>
+      </div>
     </div>
+    <select id="myList" onchange="changeGood()">
+        <option>Tritanium</option>
+        <option>Light Missile Launcher</option>
+        <option>Drake</option>
+    </select>
   </div>
-  <select id="myList" onchange="changeGood()">
-      <option>Tritanium</option>
-      <option>Light Missile Launcher</option>
-      <option>Drake</option>
-  </select>
   <div id="modeChange"></div>
   <br>
   <div id="tree-map-container">
     <div id="tree-map"></div>
+  </div>
+
+  <div id="color-key">
+
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
+    <div class="key-value"></div>
   </div>
 
   <div id="slider">
@@ -34,19 +49,6 @@
     <div contenteditable="true" class="min">30000000</div>
     <input type="range" min="30000000" max="40000000">
     <div contenteditable="true" class="max">40000000</div>
-  </div>
-
-  <div id="color-key">
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
   </div>
 
   <div id="scatter-plot-container">
@@ -61,6 +63,7 @@
   <!--our files-->
   <script type="text/javascript" src="/js/color.js"></script>
   <script type="text/javascript" src="/js/colorKey.js"></script>
+  <script type="text/javascript" src="/js/detailsOnDemand.js"></script>
   <script type="text/javascript" src="/js/treeMap.js"></script>
   <script type="text/javascript" src="/js/slider.js"></script>
   <script type="text/javascript" src="/js/buySellMode.js"></script>

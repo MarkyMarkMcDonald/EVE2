@@ -4,7 +4,6 @@ var currentMode = 'region';
 var currentGoodType = 'Tritanium';
 var currentRegion = "Geminate";
 var paletteNum = 0;
-var tooltipDiv;
 var mostChildren = 1;
 
 var systemValueFinder = function(d) {
@@ -36,6 +35,7 @@ var createRegionTreeMap = function(root) {
         return systemValueFinder(d);
       }
     });
+
 
   var div = d3.select("#tree-map").append("div")
     .style("position", "relative")
@@ -85,40 +85,19 @@ var createRegionTreeMap = function(root) {
     })
     .call(position)
     .style("background", setNodeColor);
-    node.attr("data-averageSellPrice", function(d)
-    {
-        if (currentMode == 'region')
-        {
-            return d.children ? null : d.averageRegionSellPrice;
-        }
-        else
-        {
-            if (!d.children)
-            {
-                var sysAmount = 0;
-                for (var i = 0; i < d[orderType].length; i++) {
-                    sysAmount += d[orderType][i].remaining * d[orderType][i].price;
-                }
-            }
-            return sysAmount;
-        }
+    node.attr('data-val', function(d) {
+      if (currentMode == 'region') {
+        return regionValueFinder(d);
+      } else {
+        return systemValueFinder(d);
+      }
     });
-
-    node.on("mouseover", function(d) {
-        if(!d.children)
-        {
-            tooltipDiv.transition().duration(200)
-                .style("opacity", .9);
-            tooltipDiv.html(d.name + "<br/>")
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-
+    if (currentMode == 'region') {
+      node.attr('data-numberOfSystems', function(d) {
+        return d.children ? d.children.length : null ;
+      })
     }
-    }).on("mouseout", function(d) {
-            tooltipDiv.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+
 
 
 
@@ -141,10 +120,9 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
       }
     });
 
-    if (orderType == 'sellOrders') {
-      // Buy Mode (return quantity)
-      var currentPrice = 0;
-      var currentQuantity = 0;
+    var currentPrice = 0;
+    var currentQuantity = 0;
+    if (orderType == 'sellOrders') {       // Buy Mode (return quantity)
       // each loop that breaks on false return
       _.every(orderArray, function(order) {
         var price = parseFloat(order.price);
@@ -165,8 +143,6 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
       return currentQuantity;
     } else {
         // each loop that breaks on false return
-        var currentPrice = 0;
-        var currentQuantity = 0;
         _.every(orderArray, function(order) {
             var price = parseFloat(order.price);
             var quantity = parseInt(order.remaining);
@@ -236,20 +212,26 @@ function updateInfoviz() {
       createRegionTreeMap(root);
         drawColorKeys();
     } else {
-      // create root that's a system instead of region
+        // create root that's a region instead of lots of regions
 
-        var system = _.find(root.children, function(system) {
-          return system.name == currentRegion;
+        var region = _.find(root.children, function(region) {
+          return region.name == currentRegion;
         });
 
-        createRegionTreeMap(system);
+        if (!region) {
+          currentMode = 'region';
+          createRegionTreeMap(root)
+        } else {
+          createRegionTreeMap(region);
+        }
+
+
         drawColorKeys();
         createScatterPlot(root.children[0].children[0]);  
     }
 
   });
 }
-
 
 function createScatterPlot(system){
    var timeArray = new Array();
@@ -286,6 +268,5 @@ function createScatterPlot(system){
 
 
 updateInfoviz();
-$(function(){tooltipDiv = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);});
+
+

@@ -31,4 +31,10 @@ div.tooltip {
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
+    z-index: 9999;
+}
+
+.node.system:hover, .node.region:hover {
+  z-index: 9999;
+  border: black 2px solid;
 }
