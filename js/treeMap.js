@@ -41,7 +41,29 @@ var createRegionTreeMap = function(root) {
     .style("left", margin.left + "px")
     .style("top", margin.top + "px");
 
-  var node = div.datum(root).selectAll(".node")
+    function setNodeColor(d) {
+        var color;
+        if (currentMode == 'region') {
+            color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
+        }
+        else
+        {
+            if (!d.children) {
+                var sysAmount = 0;
+                for (var i = 0; i < d[orderType].length; i++) {
+                    sysAmount += (d[orderType][i].remaining * d[orderType][i].price);
+                }
+                var pct = (sysAmount / currentAmount);
+                pct = pct > 1 ? 1 : pct;
+                pct = 1 - pct;
+                console.log(pct);
+                color = getColorForPercentage(pct);
+            }
+        }
+        return color;
+    }
+
+    var node = div.datum(root).selectAll(".node")
     .data(treemap.nodes)
     .enter().append("div")
     .attr("class", "node")
@@ -49,26 +71,25 @@ var createRegionTreeMap = function(root) {
       return d.name;
     })
     .call(position)
-    .style("background", function(d) {
-          var color;
-          if(currentMode == 'region')
-          {
-              color = d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
-          }
-          if(!d.children)
+    .style("background", setNodeColor);
+
+  node.text(function(d)
+  {
+      if (currentMode == 'region')
+      {
+        return d.children ? null : d.name + '\n' + d.averageRegionSellPrice;
+      }
+      else
+      {
+          if (!d.children)
           {
               var sysAmount = 0;
-              for(var i = 0; i < d[orderType].length; i++)
-              {
+              for (var i = 0; i < d[orderType].length; i++) {
                   sysAmount += d[orderType][i].remaining * d[orderType][i].price;
               }
-              color = getColorForPercentage(sysAmount / currentAmount);
           }
-      return color;
-    });
-
-  node.text(function(d) {
-    return d.children ? null : d.name + '\n' + d.averageRegionSellPrice;
+          return d.name + '\n' + sysAmount;
+      }
   });
 
   function position() {

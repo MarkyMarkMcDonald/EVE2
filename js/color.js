@@ -9,6 +9,10 @@ var percentColors = [
  * Taken from: http://stackoverflow.com/questions/7128675/from-green-to-red-color-depend-on-percentage
  */
 var getColorForPercentage = function(pct) {
+    if(pct == 0)
+    {
+        pct = 0.0001;
+    }
   for (var i = 0; i < percentColors.length; i++) {
     if (pct <= percentColors[i].pct) {
       var lower = percentColors[i - 1];
