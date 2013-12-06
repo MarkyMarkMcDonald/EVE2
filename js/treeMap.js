@@ -225,7 +225,7 @@ function updateInfoviz() {
 
         createRegionTreeMap(system);
         drawColorKeys();
-        
+
     }
 
   });
