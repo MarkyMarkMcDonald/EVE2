@@ -238,9 +238,33 @@ function createScatterPlot(system) {
  var xScale = d3.scale.linear().domain([0, timeArray.length]).range([0,width]); 
  var yScale = d3.scale.linear().domain([0,10]).range([h,0]);
 
- //var line = d3.svg.line();
+ var line = d3.svg.line()
+      .x(function(d,i){
+        return x(i);
+      })
+      .y(function(d){
+        return y(d);
+      })
 
+      var graph = d3.select("#lineGraph").append("svg:svg")
+        .attr("width", width + margins[1] + margins[3])
+        .attr("height", height + margins[0] + margins[2])
+        .append("svg:g")
+        .attr("transform", "translate(" + m[3] + "," + m[0] + ")")
 
+      var xAxis = d3.svg.axis().scale(xScale).tickSize(-height).tickSubdivide(true);
+        graph.append("svg:g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+      var yAxis = d3.svg.axis().scale(yScale).ticks(4).orient("left");
+      graph.append("svg:g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(-25,0)")
+            .call(yAxis);
+
+      graph.append("svg:path").attr("d", line(priceArray));
 
 }
 
