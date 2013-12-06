@@ -1,9 +1,14 @@
+var rootFromServer;
+var orderType = 'sellOrders';
+var currentAmount = 135000000;
+var currentMode = 'region';
+
 var systemValueFinder = function(d) {
-  return (averageSystemPricePerUnit(d.buyOrders));
+  return (averageSystemPricePerUnit(d[orderType], orderType, currentAmount));
 };
 
 var regionValueFinder = function(d) {
-  return d.averageRegionBuyPrice
+  return d.averageRegionSellPrice
 };
 
 var createRegionTreeMap = function(root) {
@@ -19,7 +24,7 @@ var createRegionTreeMap = function(root) {
     .value(regionValueFinder);
 
 
-  var div = d3.select("body").append("div")
+  var div = d3.select("#tree-map").append("div")
     .style("position", "relative")
     .style("width", (width + margin.left + margin.right) + "px")
     .style("height", (height + margin.top + margin.bottom) + "px")
@@ -30,13 +35,16 @@ var createRegionTreeMap = function(root) {
     .data(treemap.nodes)
     .enter().append("div")
     .attr("class", "node")
+    .attr("name", function(d) {
+      return d.name;
+    })
     .call(position)
     .style("background", function(d) {
-      return d.children ? color(d.name) : null;
+      return d.children ? null : getColorForPercentage(d.numberOfChildren / 100);
     });
 
   node.text(function(d) {
-    return d.children ? null : d.name + ' ' + d.value;
+    return d.children ? null : d.name + '\n' + d.averageRegionSellPrice;
   });
 
   function position() {
@@ -49,36 +57,45 @@ var createRegionTreeMap = function(root) {
 
 var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
   if (!_.isEmpty(orderArray)) {
-    orderArray = _.sortBy(orderArray, function(item) {
-      if (orderType = 'buyOrders') {
-        return item.price;
+    orderArray = _.sortBy(orderArray, function(order) {
+      if (orderType = 'sellOrders') {
+        return order.price;
       } else {
-        return -1 * item.price;
+        return -1 * order.price;
       }
     });
 
-    var currentPrice = 0;
+    if (orderType = 'sellOrders') {
+      var currentPrice = 0;
+      var currentQuantity = 0;
+      // each loop that breaks on false return
+      _.every(orderArray, function(order) {
+        var price = parseFloat(order.price);
+        var quantity = parseInt(order.remaining);
+        if (bound - (currentPrice + price * quantity) > 0) {
+          currentPrice += price * quantity;
+          currentQuantity += quantity;
+          return true;
+        } else {
+          var difference = bound - currentPrice;
+          var numberPurchasableLeft = Math.floor(difference / price);
+          currentPrice += numberPurchasableLeft * price;
+          currentQuantity += numberPurchasableLeft;
+          return false;
+        }
+      });
 
-//    _.each(orderArray, function(item) {
-//      if (bound - currentPrice)
-//    })
+      return currentQuantity;
+    } else {
 
-    var totalPrice  = _.reduce(orderArray, function(memo, item) {
-      return (parseFloat(item.price) * parseInt(item.remaining)) + memo;
-    }, 0);
-
-    var totalQuantity = _.reduce(orderArray, function(memo, item) {
-      return parseInt(item.remaining) + memo;
-    }, 0);
-
-    return totalPrice /  totalQuantity;
+    }
   } else {
     return 0;
   }
 };
 
 /*
-  Just showing regions
+ Just showing regions
  */
 var averageRegionPricePerUnit = function(systems, orderType, bound) {
   var allRegionOrders = [];
@@ -96,19 +113,27 @@ function createRegionData(root, bound) {
   _.each(root.children, function(region) {
     region.averageRegionBuyPrice = averageRegionPricePerUnit(region.children, 'buyOrders', bound);
     region.averageRegionSellPrice = averageRegionPricePerUnit(region.children, 'sellOrders', bound);
+    region.numberOfChildren = region.children.length;
     delete region.children;
   });
 
   return root;
 }
 
+/*
+ Should update infoviz based on given value
+ */
+function updateInfoviz() {
+  d3.json("tritainium.json", function(error, root) {
+    root =  createRegionData(root, currentAmount);
 
-d3.json("drake.json", function(error, root) {
-  console.log(root);
+    $('#tree-map').empty();
+    if (currentMode == 'region') {
+      createRegionTreeMap(root);
+    } else {
 
-  root = createRegionData(root);
-//  root = root.children[0];
+    }
+  });
+}
 
-  createRegionTreeMap(root);
-});
-
+updateInfoviz();
