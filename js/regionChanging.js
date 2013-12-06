@@ -18,8 +18,3 @@ $(function(){
 
 });
 
-function displayToolTip(node)
-{
-    
-    console.log(node.getAttribute("name"));
-}

@@ -4,7 +4,7 @@ var currentMode = 'region';
 var currentGoodType = 'Tritanium';
 var currentRegion = "Geminate";
 var paletteNum = 0;
-
+var tooltipDiv;
 var mostChildren = 1;
 
 var systemValueFinder = function(d) {
@@ -104,7 +104,23 @@ var createRegionTreeMap = function(root) {
         }
     });
 
-    node.attr("onmouseover", "displayToolTip(this)");
+    node.on("mouseover", function(d) {
+        if(!d.children)
+        {
+            tooltipDiv.transition().duration(200)
+                .style("opacity", .9);
+            tooltipDiv.html(d.name + "<br/>")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+
+    }
+    }).on("mouseout", function(d) {
+            tooltipDiv.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
+
+
 
 
   function position() {
@@ -236,3 +252,6 @@ function updateInfoviz() {
 
 
 updateInfoviz();
+$(function(){tooltipDiv = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);});
