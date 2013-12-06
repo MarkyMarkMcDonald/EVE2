@@ -228,10 +228,44 @@ function updateInfoviz() {
 
         createRegionTreeMap(system);
         drawColorKeys();
-
+        createScatterPlot(root.children[0].children[0]);  
     }
 
   });
+}
+
+
+function createScatterPlot(system){
+   var timeArray = new Array();
+   var priceArray = new Array();
+   var dateArray = new Array();
+   for(var i =0; i<system.sellOrders.length; i++){
+     timeArray[i]= system.sellOrders[i].time.split(' ')[1];
+     dateArray[i]= system.sellOrders[i].time.split(' ')[0];
+     priceArray[i]= parseFloat(system.sellOrders[i].price);
+   }
+   var w = 940,
+      h = 300,
+      pad = 20,
+      left_pad = 100;
+   var svg = d3.select("#scatter-plot")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+   var x = d3.scale.linear().domain([0, 23]).range([left_pad, w-pad]),
+       y = d3.scale.linear().domain([0, 6]).range([pad, h-pad*2]);
+   var xAxis = d3.svg.axis().scale(x).orient("bottom"),
+       yAxis = d3.svg.axis().scale(y).orient("left");     
+       
+   svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0, "+(h-pad)+")")
+    .call(xAxis);
+ 
+   svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate("+(left_pad-pad)+", 0)")
+    .call(yAxis);
 }
 
 
