@@ -218,7 +218,29 @@ function createScatterPlot(system) {
   console.log(system.sellOrders);
   console.log(system.buyOrders);
 
-  system.sellOrders[0].time.split(' ')[1].split(':');
+  var timeArray = new Array();
+  var priceArray = new Array();
+  var dateArray = new Array();
+
+//Puts data into 3 separate arrays
+  for(var i =0; i<system.sellOrders.length; i++){
+    timeArray[i]= system.sellOrders[i].time.split(' ')[1];
+    dateArray[i]= system.sellOrders[i].time.split(' ')[0];
+    priceArray[i]= system.sellOrders[i].price;
+  }
+
+ //dimensions of line graph
+ var margins = [80, 80, 80, 80]
+ var width = 1000 - m[1]-m[3];
+ var height = 400 - m[0]-m[2];
+
+ //x and y scales
+ var xScale = d3.scale.linear().domain([0, timeArray.length]).range([0,width]); 
+ var yScale = d3.scale.linear().domain([0,10]).range([h,0]);
+
+ //var line = d3.svg.line();
+
+
 
 }
 
