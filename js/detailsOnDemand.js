@@ -3,17 +3,22 @@ $(function(){
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-  $('body').on("mousemove", '.node', function(event) {
+  $('#tree-map-container').on("mousemove", '.node', function(event) {
     var $this = $(event.target);
+
     if ($this.hasClass('region') || $this.hasClass('system')) {
       tooltipDiv.transition().duration(200)
         .style("opacity", .9);
 
+      var xOffset = ($(window).width() - 1000) / 2;
+      
+      tooltipDiv.style("left", (event.clientX - xOffset) + "px")
+        .style("top", (event.clientY) + "px");
+
       var text = detailsTemplate($this);
 
       tooltipDiv.html(text)
-        .style("left", (event.pageX - 135) + "px")
-        .style("top", (event.clientY - 30) + "px");
+
 
     }
   }).on("mouseout", '.node', function(event) {
