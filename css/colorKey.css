@@ -1,11 +1,15 @@
 #color-key {
-  margin-top: 50px;
+  margin: 0 auto;
+  margin-top: 5px;
+
 }
 
 .key-value {
   height: 10px;
-  width: 95px;
+  width: 94px;
   float: left;
+
   margin-bottom: 10px;
+
 }
 

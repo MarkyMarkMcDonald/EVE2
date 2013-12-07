@@ -12,19 +12,24 @@
 </head>
 <body>
 <div class="wrapper">
-  <div style="background: #000;">
-      <br />
-      <h1 style="color:#FFFFFF; padding: 0em;">Eve </h1>
-      <br />
-      <div style="clear: both;">&nbsp;</div>
-  </div>
+    <div style="background: #000;">
+        <img src="/Images/Eve.png" alt="Eve" height="59" width="152" style="float:left;">
+        <br />
+        <br />
+        <div style="clear: both;">&nbsp;</div>
+    </div>
   <div class="options">
-    <div id="trading-mode">
-      <div class="btn-group">
+      <select id="myList" onchange="changeGood()" style="margin: 1em 1em; float:left;">
+          <option>Tritanium</option>
+          <option>Light Missile Launcher</option>
+          <option>Drake</option>
+      </select>
+      <div class="btn-group" style="margin: 1em 1em 1em 1em; float:right">
         <button class="buy btn" name="buyOrders">Buy Orders</button>
         <button class="sell btn active" name="sellOrders">Sell Orders</button>
       </div>
-    </div>
+
+
 
     <div id="slider">
       <div class="current-value">35000000</div>
@@ -33,11 +38,7 @@
       <div contenteditable="true" class="max">40000000</div>
     </div>
 
-    <select id="myList" onchange="changeGood()">
-        <option>Tritanium</option>
-        <option>Light Missile Launcher</option>
-        <option>Drake</option>
-    </select>
+
   </div>
   <div id="modeChange"></div>
 
@@ -49,7 +50,7 @@
 
 
 
-  <div id="color-key">
+  <div id="color-key" style="margin:0 auto;">
     <div class="key-value"></div>
     <div class="key-value"></div>
     <div class="key-value"></div>

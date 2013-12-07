@@ -1,6 +1,6 @@
 #slider {
   width: 750px;
-  margin: 30px auto;
+  margin: 10px auto;
     clear:both;
 }
 
@@ -8,10 +8,12 @@
   Max and Min
 */
 .max {
+    color: white;
   float: left;
 }
 
 .min {
+    color: white;
   float: left;
 }
 
@@ -24,6 +26,7 @@
 */
 input[type="range"] {
   float: left;
+
   width: 500px;
 }
 
@@ -31,6 +34,7 @@ input[type="range"] {
   Current Value
 */
 .current-value {
+  color: white;
   position: relative;
   top: 40px;
   left: 280px;
