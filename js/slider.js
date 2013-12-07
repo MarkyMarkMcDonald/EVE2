@@ -29,6 +29,7 @@ var minAndMaxChangeDetections = function() {
 
   $('#slider').on('blur', '.min', function(event) {
     var $this = $(this);
+
     var newMin = parseInt($this.text().trim());
     if (newMin <= 0) {
       newMin = 1;
@@ -45,5 +46,26 @@ var minAndMaxChangeDetections = function() {
     }
     $this.text(newMax);
     $slider.attr('max', newMax);
+  });
+
+  $('#slider').on('blur', '.current-value', function(event) {
+    var $this = $(this);
+    var newValue = parseInt($this.text().trim());
+    var max = $slider.attr('max');
+    var min = $slider.attr('min');
+    if (newValue <= 0) {
+      return;
+    }
+    $this.text(newValue);
+    if (newValue > max) {
+      $slider.attr('max', newValue);
+      $('#slider').find('.max').text(newValue);
+    } else if (newValue < min) {
+      $slider.attr('min', newValue);
+      $('#slider').find('.min').text(newValue);
+    }
+    $slider.attr('value', newValue);
+    currentAmount = newValue;
+    updateInfoviz();
   });
 };
