@@ -5,9 +5,9 @@ body {
 
 .wrapper
 {
-    width: 1000px;
+    width: 960px;
     margin: 0 auto;
     background: #333;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 }
