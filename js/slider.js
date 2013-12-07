@@ -30,6 +30,9 @@ var minAndMaxChangeDetections = function() {
   $('#slider').on('blur', '.min', function(event) {
     var $this = $(this);
     var newMin = parseInt($this.text().trim());
+    if (newMin <= 0) {
+      newMin = 1;
+    }
     $this.text(newMin);
     $slider.attr('min', newMin);
   });
@@ -37,6 +40,9 @@ var minAndMaxChangeDetections = function() {
   $('#slider').on('blur', '.max', function(event) {
     var $this = $(this);
     var newMax = parseInt($this.text().trim());
+    if (newMax <= 0) {
+      newMax = 1;
+    }
     $this.text(newMax);
     $slider.attr('max', newMax);
   });
