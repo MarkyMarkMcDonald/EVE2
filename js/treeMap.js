@@ -237,6 +237,14 @@ function updateInfoviz() {
         document.getElementById('neg').innerHTML = 'High Percentage of ISK used';
         document.getElementById('pos').innerHTML = 'Low Percentage of ISK used';
     }
+    if(orderType == "buyOrders")
+    {
+        document.getElementById('sliderTitle').innerHTML = 'Quantity of Good to Sell';
+    }
+    else
+    {
+        document.getElementById('sliderTitle').innerHTML = 'Amount of ISK to Spend';
+    }
 }
 
 
