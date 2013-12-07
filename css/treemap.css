@@ -41,10 +41,15 @@ div.tooltip {
 
 .insecure:after {
   content: "";
-  width: 10%;
-  height: 10%;
+  width: 70px;
+  height: 61px;
+  position: absolute;
+  left: -17px;
+  top: -8px;
   background: url('/Images/skull-icon-small.png') no-repeat;
 }
+
+
 
 
 /*position: absolute;*/
