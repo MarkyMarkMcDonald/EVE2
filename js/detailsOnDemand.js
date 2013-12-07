@@ -15,12 +15,14 @@ $(function(){
     }
   }).on("mouseout", '.node', hideYeToolTip);
 
+
+
   $('body').on('mouseenter','.circle', function(event) {
     var $this = $(event.target);
-
+    var xOffset = ($(window).width() - 960) / 2;
     bringForthYeToolTip();
 
-    tooltipDiv.style("left", ($this.offset().left) + "px")
+    tooltipDiv.style("left", ($this.offset().left - xOffset + 20) + "px")
       .style("top", ($this.offset().top) + "px");
 
     var text = circleDetailsTemplate($this);
