@@ -241,11 +241,11 @@ function updateInfoviz() {
     }
     if(orderType == "buyOrders")
     {
-        document.getElementById('sliderTitle').innerHTML = 'Quantity of Good to Sell';
+        document.getElementById('sliderTitle').innerHTML = '<h3>Quantity of Good to Sell</h3>';
     }
     else
     {
-        document.getElementById('sliderTitle').innerHTML = 'Amount of ISK to Spend';
+        document.getElementById('sliderTitle').innerHTML = '<h3>Amount of ISK to Spend</h3>';
     }
 }
 
