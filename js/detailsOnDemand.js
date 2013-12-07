@@ -7,28 +7,56 @@ $(function(){
     var $this = $(event.target);
 
     if ($this.hasClass('region') || $this.hasClass('system')) {
-      tooltipDiv.transition().duration(200)
-        .style("opacity", .9);
+      bringForthYeToolTip();
+      moveToolTipToMouse(event);
 
-      var xOffset = ($(window).width() - 1000) / 2;
-      
-      tooltipDiv.style("left", (event.clientX - xOffset) + "px")
-        .style("top", (event.clientY) + "px");
-
-      var text = detailsTemplate($this);
-
+      var text = nodeDetailsTemplate($this);
       tooltipDiv.html(text)
-
-
     }
-  }).on("mouseout", '.node', function(event) {
-      tooltipDiv.transition()
-        .duration(500)
-        .style("opacity", 0);
-    });
+  }).on("mouseout", '.node', hideYeToolTip);
+
+  $('body').on('mouseenter','.circle', function(event) {
+    var $this = $(event.target);
+
+    bringForthYeToolTip();
+
+
+    tooltipDiv.style("left", ($this.offset().left) + "px")
+      .style("top", ($this.offset().top) + "px");
+
+    var text = circleDetailsTemplate($this);
+
+    tooltipDiv.html(text);
+  }).on("mouseout", '.circle', hideYeToolTip);
+
+  function bringForthYeToolTip(){
+    tooltipDiv.transition().duration(200)
+      .style("opacity", .9);
+  }
+
+  function hideYeToolTip() {
+    tooltipDiv.transition()
+      .duration(500)
+      .style("opacity", 0);
+  }
+
+  function moveToolTipToMouse(event) {
+    var xOffset = ($(window).width() - 960) / 2;
+
+    tooltipDiv.style("left", (event.clientX - xOffset) + "px")
+      .style("top", (event.clientY) + "px");
+
+  }
 });
 
-function detailsTemplate($node) {
+function circleDetailsTemplate($circle) {
+  var price = $circle.attr('data-price');
+  var remaining = $circle.attr('data-remaining');
+
+  return "Price: " + price + "</br>" + "Quantity: " + remaining;
+}
+
+function nodeDetailsTemplate($node) {
   var text = $node.attr('name');
 
   var nodeValue = parseInt($node.attr('data-val') * 100) / 100;

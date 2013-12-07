@@ -60,7 +60,6 @@ var createRegionTreeMap = function(root) {
                 var pct = (sysAmount / currentAmount);
                 pct = pct > 1 ? 1 : pct;
                 pct = 1 - pct;
-                console.log(pct);
                 paletteNum = 0;
                 color = getColorForPercentage(pct, paletteNum);
             }
@@ -156,9 +155,7 @@ var averageSystemPricePerUnit = function(orderArray, orderType, bound) {
                 return false;
             }
         });
-        console.log(currentPrice);
         return currentPrice;
-
     }
   } else {
     return 0;
@@ -213,7 +210,6 @@ function updateInfoviz() {
         drawColorKeys();
     } else {
         // create root that's a region instead of lots of regions
-
         var region = _.find(root.children, function(region) {
           return region.name == currentRegion;
         });
@@ -225,9 +221,7 @@ function updateInfoviz() {
           createRegionTreeMap(region);
         }
 
-
         drawColorKeys();
-        createScatterPlot(root.children[0].children[0]);  
     }
 
   });

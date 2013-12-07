@@ -11,11 +11,20 @@ var greenColors = [
 ];
 
 function getColorKeys(paletteNum){
+  var  i;
   var colorKey = [];
-  for (var i = 1; i <= 10; i++) {
-    colorKey.push(getColorForPercentage(i / 10, paletteNum));
+  if (paletteNum == 1) {
+    for (i = 10; i >= 0; i--) {
+      colorKey.push(getColorForPercentage(i / 10, paletteNum));
+    }
+  } else {
+    for (i = 1; i <= 10; i++) {
+      colorKey.push(getColorForPercentage(i / 10, paletteNum));
+    }
   }
   return colorKey;
+
+
 }
 
 /**
