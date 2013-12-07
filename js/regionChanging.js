@@ -3,7 +3,7 @@ $(function(){
     var name = $(event.target).attr('name');
       currentMode = "system";
       currentRegion = name;
-      document.getElementById('modeChange').innerHTML = '<button class="mChange btn btn-primary" name="ChangeMode">Back</button>';
+      document.getElementById('modeChange').innerHTML = '<button class="mChange btn btn-danger" name="ChangeMode">Back</button>';
       updateInfoviz();
   });
 

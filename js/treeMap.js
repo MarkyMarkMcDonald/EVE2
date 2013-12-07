@@ -194,6 +194,7 @@ function changeGood()
 {
     var mylist=document.getElementById("myList");
     currentGoodType = mylist.options[mylist.selectedIndex].text;
+    currentMode = 'region';
     updateInfoviz();
 }
 
@@ -203,6 +204,7 @@ function changeGood()
 function updateInfoviz() {
   d3.json("data/" + currentGoodType + ".json", function(error, root) {
     $('#tree-map').empty();
+    $('#scatter-plot').empty();
     if (currentMode == 'region') {
       root =  createRegionData(root, currentAmount);
 

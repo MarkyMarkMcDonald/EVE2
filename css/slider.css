@@ -1,7 +1,8 @@
 #slider {
   width: 750px;
-  margin: 0 auto;
-    clear:both;
+  clear:both;
+  margin: 0 auto 0 170px;
+
 }
 
 /*
@@ -26,7 +27,6 @@
 */
 input[type="range"] {
   float: left;
-
   width: 500px;
 }
 
@@ -36,6 +36,7 @@ input[type="range"] {
 .current-value {
   color: white;
   position: relative;
+  margin: 0 auto;
   top: 40px;
-  left: 280px;
+  left: 275px;
 }

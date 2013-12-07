@@ -20,7 +20,6 @@ $(function(){
 
     bringForthYeToolTip();
 
-
     tooltipDiv.style("left", ($this.offset().left) + "px")
       .style("top", ($this.offset().top) + "px");
 
@@ -44,7 +43,7 @@ $(function(){
     var xOffset = ($(window).width() - 960) / 2;
 
     tooltipDiv.style("left", (event.clientX - xOffset) + "px")
-      .style("top", (event.clientY) + "px");
+      .style("top", (event.clientY + $(window).scrollTop()) + "px");
 
   }
 });
