@@ -74,7 +74,13 @@ var createRegionTreeMap = function(root) {
       if (!d.children && currentMode == 'region') {
         return "node region"
       } else if (!d.children && currentMode == 'system') {
-        return "node system"
+        var potentialBuyOrder = d['buyOrders'][0];
+        var potentialSellOrder = d['sellOrders'][0];
+        if ((potentialBuyOrder && potentialBuyOrder.security < .5) || (potentialSellOrder && potentialSellOrder.security < .5)) {
+          return "node system insecure"
+        } else {
+          return "node system"
+        }
       } else {
         return "node";
       }
@@ -96,10 +102,6 @@ var createRegionTreeMap = function(root) {
         return d.children ? d.children.length : null ;
       })
     }
-
-
-
-
 
   function position() {
     this.style("left", function(d) { return d.x + "px"; })

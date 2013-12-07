@@ -59,24 +59,28 @@ function createScatterPlot(system){
 }
 
 $(function(){
-  $('body').on('click', '.node.system', function(e) {
+  /*
+  Unfortunately the data doesn't really fit line graphs - see report
+   */
 
-    var systemName = $(this).attr('name');
-
-    d3.json("data/" + currentGoodType + ".json", function(error, root) {
-
-      var region = _.find(root.children, function(region) {
-        return region.name == currentRegion;
-      });
-
-      var system = _.find(region.children, function(system) {
-        return system.name == systemName;
-      });
-
-      createScatterPlot(system);
-
-    });
-
-  })
+//  $('body').on('click', '.node.system', function(e) {
+//
+//    var systemName = $(this).attr('name');
+//
+//    d3.json("data/" + currentGoodType + ".json", function(error, root) {
+//
+//      var region = _.find(root.children, function(region) {
+//        return region.name == currentRegion;
+//      });
+//
+//      var system = _.find(region.children, function(system) {
+//        return system.name == systemName;
+//      });
+//
+//      createScatterPlot(system);
+//
+//    });
+//
+//  })
 
 });

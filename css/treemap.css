@@ -38,3 +38,22 @@ div.tooltip {
   z-index: 9999;
   border: black 2px solid;
 }
+
+.insecure:after {
+  content: "";
+  width: 10%;
+  height: 10%;
+  background: url('/Images/skull-icon-small.png') no-repeat;
+}
+
+
+/*position: absolute;*/
+/*display: inline-block;*/
+/*height: 100px;*/
+/*width: 180px;*/
+/*left: 199px;*/
+/*top: 0;*/
+/*z-index: 9999;*/
+/*background: url('/img/LoLBanner.png') no-repeat;*/
+/*content: "";*/
+/*background-size: 180px 100px;*/
