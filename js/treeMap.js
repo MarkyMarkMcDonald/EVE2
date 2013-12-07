@@ -250,8 +250,8 @@ function createScatterPlot(system){
       .append("svg")
       .attr("width", w)
       .attr("height", h);
-   var x = d3.scale.linear().domain([0, 23]).range([left_pad, w-pad]),
-       y = d3.scale.linear().domain([0, 6]).range([h-pad*2, pad]);
+   var x = d3.scale.linear().domain([0, priceArray.length]).range([left_pad, w-pad]),
+       y = d3.scale.linear().domain([0, d3.max(priceArray)]).range([h-pad*2, pad]);
    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
        yAxis = d3.svg.axis().scale(y).orient("left");     
        
@@ -264,6 +264,20 @@ function createScatterPlot(system){
     .attr("class", "axis")
     .attr("transform", "translate("+(left_pad-pad)+", 0)")
     .call(yAxis);
+
+
+   
+   svg.selectAll("circle")
+        .data(priceArray)
+        .enter()
+        .append("circle")
+        .attr("class", "circle")
+        .attr("cx",  function (d,i) { return x(d[i]); })
+        .attr("cy", function (d,i) { return y(d[i]); })
+        .transition()
+        .duration(800)
+        .attr("r", 12);
+        
 }
 
 
