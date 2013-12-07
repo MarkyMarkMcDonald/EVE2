@@ -1,13 +1,15 @@
 body {
 
   background-image:url('/Images/PlayEVEBackground.jpg');
+  background-repeat: no-repeat;
+    background-color: black;
 }
 
 .wrapper
 {
     width: 960px;
     margin: 0 auto;
-    background: #333;
+    background: #444;
     overflow-y: hidden;
     overflow-x: hidden;
 }

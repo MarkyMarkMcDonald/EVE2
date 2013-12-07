@@ -12,7 +12,8 @@
 </head>
 <body>
 <div class="wrapper">
-    <div style="background: #000;">
+    <div style="background: #111;">
+        <br />
         <img src="/Images/Eve.png" alt="Eve" height="59" width="152" style="float:left;">
         <br />
         <br />
@@ -24,48 +25,58 @@
           <option>Light Missile Launcher</option>
           <option>Drake</option>
       </select>
-      <div class="btn-group" style="margin: 1em 1em 1em 1em; float:right">
-        <button class="buy btn" name="buyOrders">Buy Orders</button>
-        <button class="sell btn active" name="sellOrders">Sell Orders</button>
+      <div id="trading-mode">
+          <div class="btn-group" style="margin: 1em 1em; float:right">
+            <button class="buy btn" name="buyOrders" style="margin-top: 1em;">Buy Orders</button>
+            <button class="sell btn active" name="sellOrders" style="margin-top: 1em; margin-right: 1em;">Sell Orders</button>
+          </div>
       </div>
-
+      <div style="clear: both;">&nbsp;</div>
 
 
     <div id="slider">
       <div class="current-value">35000000</div>
       <div contenteditable="true" class="min">30000000</div>
-      <input type="range" min="30000000" max="40000000">
+      <input type="range"  style="margin:0 auto;" min="30000000" max="40000000">
       <div contenteditable="true" class="max">40000000</div>
     </div>
-
+    <div style="clear: both;">&nbsp;</div>
 
   </div>
-  <div id="modeChange"></div>
+  <div id="modeChange" style="margin-left: 1em; float:left"></div>
 
   <br>
 
   <div id="tree-map-container">
     <div id="tree-map"></div>
   </div>
+    <div id="neg" style="margin-left: 1em; float: left; color: white;">Low System Count</div>
+    <div id="pos" style="margin-right: 1em; float: right; color: white;">High System Count</div>
+    <div style="clear: both;">&nbsp;</div>
+    <div id="color-key" style="margin:0 auto;">
+
+        <div class="key-value" ></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+        <div class="key-value"></div>
+    </div>
 
 
 
-  <div id="color-key" style="margin:0 auto;">
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-    <div class="key-value"></div>
-  </div>
 
   <div id="scatter-plot-container">
     <div id="scatter-plot"></div>
   </div>
+    <div style="background: #111;">
+        <br />
+        <div style="clear: both;">&nbsp;</div>
+    </div>
   <!--libraries-->
   <script src="/js/lib/jquery.js"></script>
   <script src="/js/lib/d3.js"></script>

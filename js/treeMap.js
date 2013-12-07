@@ -225,6 +225,16 @@ function updateInfoviz() {
     }
 
   });
+    if(currentMode == "region")
+    {
+        document.getElementById('neg').innerHTML = 'Low System Count';
+        document.getElementById('pos').innerHTML = 'High System Count';
+    }
+    else
+    {
+        document.getElementById('neg').innerHTML = 'High Percentage of ISK used';
+        document.getElementById('pos').innerHTML = 'Low Percentage of ISK used';
+    }
 }
 
 
