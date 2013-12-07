@@ -14,3 +14,13 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+h2.title:after {
+  position: absolute;
+  content: "";
+  width: 150px;
+  height: 200px;
+  left: 42px;
+  top: 25px;
+  background: url('/Images/Eve.png') no-repeat;
+}
