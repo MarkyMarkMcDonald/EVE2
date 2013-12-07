@@ -59,7 +59,7 @@ var createRegionTreeMap = function(root) {
                 }
                 var pct = (sysAmount / currentAmount);
                 pct = pct > 1 ? 1 : pct;
-                pct = 1 - pct;
+                pct = pct;
                 paletteNum = 0;
                 color = getColorForPercentage(pct, paletteNum);
             }
@@ -236,8 +236,9 @@ function updateInfoviz() {
     }
     else
     {
-        document.getElementById('neg').innerHTML = 'High Percentage of ISK used';
-        document.getElementById('pos').innerHTML = 'Low Percentage of ISK used';
+
+        document.getElementById('neg').innerHTML = 'Low Percentage of ISK used';
+        document.getElementById('pos').innerHTML = 'High Percentage of ISK used';
     }
     if(orderType == "buyOrders")
     {
