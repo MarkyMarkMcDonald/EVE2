@@ -3,6 +3,7 @@ body {
   background-image:url('/Images/PlayEVEBackground.jpg');
   background-repeat: no-repeat;
     background-color: black;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .wrapper
