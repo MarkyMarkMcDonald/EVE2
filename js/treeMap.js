@@ -48,7 +48,7 @@ var createRegionTreeMap = function(root) {
         var color;
         if (currentMode == 'region') {
             paletteNum = 1;
-            color = d.children ? null : getColorForPercentage(d.numberOfChildren / mostChildren, paletteNum);
+            color = d.children ? null : getColorForPercentage(1 - d.numberOfChildren / mostChildren, paletteNum);
         }
         else
         {
